@@ -1,3 +1,1 @@
-export async function userIsLoggedIn() {
-    
-}
+import { NextResponse } from "next/server";
