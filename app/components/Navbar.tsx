@@ -11,13 +11,16 @@ export default function Navbar()
                 </div>
                 <ul className="flex space-x-6 text-lg">
                     <li>
-                        <Link href="/" className="hover:text-blue-600 transition-colors">Home</Link>
+                            <Link href="/" className="hover:text-blue-600 transition-colors">Home</Link>
                         </li>
                         <li>
-                        <Link href="/login" className="hover:text-blue-600 transition-colors">Login Page</Link>
+                            <Link href="/login" className="hover:text-blue-600 transition-colors">Login Page</Link>
                         </li>
                         <li>
-                        <Link href="/contact" className="hover:text-blue-600 transition-colors">Contact</Link>
+                            <Link href="/managers" className="hover:text-blue-600 transition-colors">Managers</Link>
+                        </li>
+                        <li>
+                            <Link href="/trainer" className="hover:text-blue-600 transition-colors">Trainers</Link>
                         </li>
                 </ul>
             </div>
