@@ -60,14 +60,6 @@ export default function LoginPage() {
             Log in
           </button>
         </form>
-
-        <button
-          type="button"
-          onClick={flushCookie}
-          className="mt-4 w-full bg-red-500 text-white py-2 rounded-xl hover:bg-red-600 active:scale-95 transition-all shadow-md"
-        >
-          Flush Cookie
-        </button>
       </div>
     </div>
 

@@ -33,18 +33,3 @@ export async function POST(req: Request) {
     );
   }
 }
-
-
-
-export async function DELETE() {
-  const res = NextResponse.json({ success: true });
-
-  res.cookies.set({
-    name: "auth_token",
-    value: "",
-    path: "/",
-    maxAge: 0,
-  });
-
-  return res;
-}
