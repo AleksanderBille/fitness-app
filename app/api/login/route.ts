@@ -1,25 +1,50 @@
-import { cookies } from "next/headers";
 import { NextResponse } from "next/server";
 import { login } from "@/lib/login";
 
 export async function POST(req: Request) {
-  const { email, password } = await req.json();
+  try {
+    const { email, password } = await req.json();
+    const result = await login(email, password);
 
-  const result = await login(email, password); 
-  const token = result.token; // whatever your API returns
+    const token = result.jwt;
 
-  const cookieStore = await cookies();
+    console.log("token: " + token);
 
-  // Store token securely in HttpOnly cookie
-  cookieStore.set({
+    // Must use response.cookies -- not cookies()
+    const res = NextResponse.json({ success: true });
+
+    res.cookies.set({
+      name: "auth_token",
+      value: token,
+      httpOnly: true,
+      secure: process.env.NODE_ENV === "production",
+      sameSite: "strict",
+      path: "/",
+      maxAge: 60 * 60 * 24
+    });
+
+    return res;
+  } catch (e) {
+    console.error("Login error:", e);
+
+    return NextResponse.json(
+      { success: false, error: "Login failed" },
+      { status: 500 }
+    );
+  }
+}
+
+
+
+export async function DELETE() {
+  const res = NextResponse.json({ success: true });
+
+  res.cookies.set({
     name: "auth_token",
-    value: token,
-    httpOnly: true,
-    secure: true,
-    sameSite: "strict",
+    value: "",
     path: "/",
-    maxAge: 60 * 60 * 24 // 1 day
+    maxAge: 0,
   });
 
-  return NextResponse.json({ success: true });
+  return res;
 }
