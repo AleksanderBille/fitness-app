@@ -1,11 +1,5 @@
-"use client";
-
-import { useState } from "react";
-import { useRouter } from "next/router";
-
-export default function LoginPage() {
+export default function UsersPage() {
   
-
   return (
     <h1>Hej</h1>
   );
