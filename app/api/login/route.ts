@@ -8,8 +8,6 @@ export async function POST(req: Request) {
 
     const token = result.jwt;
 
-    console.log("token: " + token);
-
     // Must use response.cookies -- not cookies()
     const res = NextResponse.json({ success: true });
 

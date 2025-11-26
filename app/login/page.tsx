@@ -18,18 +18,11 @@ export default function LoginPage() {
     const data = await res.json();
 
     if (data.success) {
-      window.location.href = "/users";
+      window.location.href = "/";
     } else {
       setEmail("");
       setPassword("");
     }
-  }
-
-  async function flushCookie() {
-    const res = await fetch("/api/login", {
-      method: "DELETE",
-      headers: { "Content-Type": "application/json" }
-    });
   }
 
   return (
@@ -62,6 +55,5 @@ export default function LoginPage() {
         </form>
       </div>
     </div>
-
   );
 }
