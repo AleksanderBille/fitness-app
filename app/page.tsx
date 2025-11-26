@@ -14,16 +14,14 @@ export default async function Home() {
   let role: string | null = null;
   let userId: string | null = null;
 
-  if (token) {
-    try {
-      const decoded: any = jwtDecode(token);
-      role = decoded.Role || null;
-      userId = decoded.UserId || null;
-    } catch (e) {
-      console.error("Failed to decode token:", e);
-    }
+  try {
+    const decoded: any = jwtDecode(token);
+    role = decoded.Role || null;
+    userId = decoded.UserId || null;
+  } catch (e) {
+    console.error("Failed to decode token:", e);
   }
-
+  
   if (role == "Client") {
     const baseUrl =
       process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000";
@@ -41,7 +39,7 @@ export default async function Home() {
     const data = await res.json();
     
     if (!res.ok) {
-      return <ErrorPage error={true} errorMessage={data.error} status={res.status}/>;
+      return <ErrorPage error={true} errorMessage={data.errorMessage} status={res.status}/>;
     }
 
     // otherwise data is the array

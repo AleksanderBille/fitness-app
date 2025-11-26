@@ -1,24 +1,21 @@
-import { createUser } from "@/lib/users";
+import { getClientsForPersonalTrainer } from "@/lib/clients";
 import { cookies } from "next/headers";
 import { NextResponse } from "next/server";
 
-export async function POST(req: Request) {
+export async function GET() {
   try {
-    const { firstName, lastName, email, password } = await req.json()
     const cookieStore = await cookies();
     const token = cookieStore.get("auth_token")?.value;
 
-    if(!token) {
+    if (!token) {
       return NextResponse.json(
         { success: false, error: "Token could not be retrieved." },
         { status: 500 }
       );
     }
 
-    const result = await createUser( firstName, lastName, email, password, token );
-
-    return result
-
+    const result = await getClientsForPersonalTrainer(token);
+    return NextResponse.json(result);
   } catch (e: any) {
     return NextResponse.json(
       { success: false, error: e?.message || String(e) },

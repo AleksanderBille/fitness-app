@@ -12,23 +12,25 @@ export async function GET(req: Request) {
 
     if (!token) {
       return NextResponse.json(
-        { success: false, error: "Token could not be retrieved." },
+        { success: false, errorMessage: "Token could not be retrieved." },
         { status: 500 }
       );
     }
 
     if (!userId) {
       return NextResponse.json(
-        { success: false, error: "Missing userId" },
+        { success: false, errorMessage: "Missing userId" },
         { status: 400 }
       );
     }
 
     const result = await getWorkputProgramsByUserId(userId, token);
+
     return NextResponse.json(result);
+
   } catch (e: any) {
     return NextResponse.json(
-      { success: false, error: e?.message || String(e) },
+      { success: false, errorMessage: e?.message || String(e) },
       { status: 500 }
     );
   }

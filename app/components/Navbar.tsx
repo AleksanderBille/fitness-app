@@ -60,6 +60,15 @@ export default async function Navbar() {
                 </li>
               </ul>
             )}
+            {role === "Manager" && (
+              <ul className="flex space-x-6 text-lg text-gray-200">
+                <li>
+                  <Link href="/trainers" className="hover:text-blue-400 transition-colors">
+                    Trainers
+                  </Link>
+                </li>
+              </ul>
+            )}
             <li>
               <LogoutButton />
             </li>

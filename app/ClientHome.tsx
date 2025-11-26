@@ -26,8 +26,6 @@ export default function ClientHome({ workoutPrograms }: ClientHomeProps) {
       (p) => p.workoutProgramId === selectedId
     );
     setSelectedProgram(program ?? null);
-    console.log("Selected program id:", selectedId);
-    console.log("Found program:", program);
   };
 
   return (
