@@ -5,6 +5,7 @@ import { useState } from "react";
 export default function LoginPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
@@ -12,31 +13,27 @@ export default function LoginPage() {
     const res = await fetch("/api/login", {
       method: "POST",
       body: JSON.stringify({ email, password }),
-      headers: { "Content-Type": "application/json" }
+      headers: { 
+        "Content-Type": "application/json" 
+      }
     });
 
     const data = await res.json();
 
     if (data.success) {
-      window.location.href = "/users";
+      setError("");
+      window.location.href = "/";
     } else {
+      setError(data.errorMessage || "Login failed. Please try again.");
       setEmail("");
       setPassword("");
     }
   }
 
-  async function flushCookie() {
-    const res = await fetch("/api/login", {
-      method: "DELETE",
-      headers: { "Content-Type": "application/json" }
-    });
-  }
-
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-900">
       <div className="bg-cyan-950 p-8 rounded-2xl shadow-lg w-full max-w-sm">
-        <h1 className="text-2xl font-semibold text-center mb-6">Login</h1>
-
+        <h1 className="text-2xl font-semibold text-center mb-6">Login</h1>   
         <form onSubmit={handleSubmit} className="space-y-4">
           <input
             value={email}
@@ -60,8 +57,12 @@ export default function LoginPage() {
             Log in
           </button>
         </form>
+        {error && (
+          <div className="mb-4 p-3 bg-red-100 border border-red-300 text-red-700 rounded-xl text-sm">
+            {error}
+          </div>
+        )}     
       </div>
     </div>
-
   );
 }

@@ -3,7 +3,6 @@ import Link from "next/link";
 import { jwtDecode } from "jwt-decode";
 import LogoutButton from "./LogoutButton";
 
-
 export default async function Navbar() {
     const cookieStore = await cookies();
     const token = cookieStore.get("auth_token")?.value;
@@ -14,7 +13,7 @@ export default async function Navbar() {
     if (token) {
         try {
             const decoded: any = jwtDecode(token);
-            role = decoded.role || null; // Adjust depending on your token shape
+            role = decoded.Role || null; // Adjust depending on your token shape
         } catch (e) {
             console.error("Failed to decode token:", e);
         }
@@ -22,45 +21,61 @@ export default async function Navbar() {
 
     return (
     <nav className="w-full bg-black shadow-md p-4">
-        <div className="max-w-7xl mx-auto flex items-center justify-between">
-            <div className="text-2xl font-bold text-white">
-            <Link href="/">MyApp</Link>
-            </div>
+      <div className="max-w-7xl mx-auto flex items-center justify-between">
+        <div className="text-2xl font-bold text-white">
+          <Link href="/">MyApp</Link>
+        </div>
 
+        <div>
+            <h1>role: {role}</h1>
+        </div>
+
+        <ul className="flex space-x-6 text-lg text-gray-200">
+          {!token && (
+            <li>
+              <Link href="/login" className="hover:text-blue-400 transition-colors">
+                Login
+              </Link>
+            </li>
+          )}
+
+          {token && (
             <ul className="flex space-x-6 text-lg text-gray-200">
             <li>
-                <Link href="/" className="hover:text-blue-400 transition-colors">Home</Link>
+              <Link href="/" className="hover:text-blue-400 transition-colors">
+                Home
+              </Link>
             </li>
-
-            {!token && (
+            {role === "PersonalTrainer" && (
+              <ul className="flex space-x-6 text-lg text-gray-200">
                 <li>
-                <Link href="/login" className="hover:text-blue-400 transition-colors">
-                    Login
-                </Link>
+                  <Link href="/clients" className="hover:text-blue-400 transition-colors">
+                    Clients
+                  </Link>
                 </li>
-            )}
-
-            {role === "manager" && (
                 <li>
-                <Link href="/managers" className="hover:text-blue-400 transition-colors">
-                    Managers
-                </Link>
+                  <Link href="/programs" className="hover:text-blue-400 transition-colors">
+                    Programs
+                  </Link>
                 </li>
+              </ul>
             )}
-
-            {role === "trainer" && (
+            {role === "Manager" && (
+              <ul className="flex space-x-6 text-lg text-gray-200">
                 <li>
-                <Link href="/trainer" className="hover:text-blue-400 transition-colors">
+                  <Link href="/trainers" className="hover:text-blue-400 transition-colors">
                     Trainers
-                </Link>
+                  </Link>
                 </li>
+              </ul>
             )}
-
-            {token && (
-                <LogoutButton />
-            )}
+            <li>
+              <LogoutButton />
+            </li>
             </ul>
-        </div>
+          )}
+        </ul>
+      </div>
     </nav>
   );
 }

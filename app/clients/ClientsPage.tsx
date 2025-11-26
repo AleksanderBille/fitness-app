@@ -1,0 +1,135 @@
+"use client"
+
+import { useState } from "react";
+import ClientCard from "../cards/ClientCard";
+
+interface ClientsPageProps {
+  clients: Client[];
+}
+
+export default function ClientsPage({ clients }: ClientsPageProps) {
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
+  const [validationErrors, setValidationErrors] = useState<Record<string, string[]>>({});
+
+  const [clientList, setClientList] = useState<Client[]>(clients);
+
+  async function handleSubmit(e: React.FormEvent) {
+    e.preventDefault();
+    setValidationErrors({});
+    setError("");
+
+    const res = await fetch("/api/users", {
+      method: "POST",
+      body: JSON.stringify({ firstName, lastName, email, password }),
+      headers: { 
+        "Content-Type": "application/json" 
+      }
+    });
+
+    const data = await res.json();
+
+    if (!data.success) {
+      setError(data.error || "Something went wrong.");
+
+      // Set validation errors if provided
+      if (data.validation) {
+        setValidationErrors(data.validation);
+      }
+      return
+    } else {
+      setError("");
+      setFirstName("");
+      setLastName("");
+      setEmail("");
+      setPassword("");
+    }
+
+    setClientList(prev => [...prev, data.user]);
+  }
+
+  return (
+    <div className="flex min-h-screen">
+      
+      {/* LEFT SIDEBAR */}
+      <div className="w-80 p-6 border-r border-gray-300 overflow-y-auto">
+        <h2 className="text-xl font-bold mb-4">Clients</h2>
+
+        {clientList.map((c) => (
+          <ClientCard key={c.userId} client={c} />
+        ))}
+      </div>
+
+      {/* RIGHT SIDE (empty for now) */}
+      <div className="flex-1 p-6">
+        <h1 className="text-2xl font-bold">Create new client</h1>
+        <form onSubmit={handleSubmit} className="space-y-4">
+          <input
+            value={firstName}
+            onChange={(e) => setFirstName(e.target.value)}
+            placeholder="First Name"
+            className="w-full px-4 py-2 border rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500"
+          />
+          {validationErrors.FirstName && (
+            <p className="text-red-600 text-sm mt-1">
+              {validationErrors.FirstName[0]}
+            </p>
+          )}
+
+          <input
+            value={lastName}
+            onChange={(e) => setLastName(e.target.value)}
+            placeholder="Last Name"
+            className="w-full px-4 py-2 border rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500"
+          />
+          {validationErrors.LastName && (
+            <p className="text-red-600 text-sm mt-1">
+              {validationErrors.LastName[0]}
+            </p>
+          )}
+          
+          <input
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            placeholder="Email"
+            className="w-full px-4 py-2 border rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500"
+          />
+          {validationErrors.Email && (
+            <p className="text-red-600 text-sm mt-1">
+              {validationErrors.Email[0]}
+            </p>
+          )}
+
+          <input
+            type="password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            placeholder="Password"
+            className="w-full px-4 py-2 border rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500"
+          />
+          {validationErrors.Password && (
+            <p className="text-red-600 text-sm mt-1">
+              {validationErrors.Password[0]}
+            </p>
+          )}
+
+          <button
+            type="submit"
+            className="w-full bg-blue-700 text-white py-2 rounded-xl hover:bg-blue-700 active:scale-95 transition-all shadow-md"
+          >
+            Create Client
+          </button>
+        </form>
+        {error && (
+          <div className="mb-4 p-3 bg-red-100 border border-red-300 text-red-700 rounded-xl text-sm">
+            {error}
+          </div>
+        )}     
+      </div>
+    </div>
+  );
+}
+
