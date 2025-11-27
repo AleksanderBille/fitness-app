@@ -26,10 +26,6 @@ export default async function Navbar() {
           <Link href="/">FitByAndAlekTho</Link>
         </div>
 
-        <div>
-            <h1>role: {role}</h1>
-        </div>
-
         <ul className="flex space-x-6 text-lg text-gray-200">
           {!token && (
             <li>
