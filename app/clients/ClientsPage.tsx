@@ -2,14 +2,14 @@
 
 import { useState } from "react";
 import ClientCard from "../cards/ClientCard";
-import CreateUserComponent from "./CreateUserComponent";
+import CreateUserComponent from "../components/CreateUserComponent";
 
 interface ClientsPageProps {
-  clients: Client[];
+  clients: User[];
 }
 
 export default function ClientsPage({ clients }: ClientsPageProps) {
-  const [clientList, setClientList] = useState<Client[]>(clients);
+  const [clientList, setClientList] = useState<User[]>(clients);
 
   return (
     <div className="flex min-h-screen">
@@ -24,7 +24,6 @@ export default function ClientsPage({ clients }: ClientsPageProps) {
       </div>
 
       <CreateUserComponent 
-        clients={clientList} 
         setClientList={setClientList}
       />
     </div>
