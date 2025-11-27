@@ -22,8 +22,8 @@ export default async function Navbar() {
     return (
     <nav className="w-full bg-black shadow-md p-4">
       <div className="max-w-7xl mx-auto flex items-center justify-between">
-        <div className="text-2xl font-bold text-white">
-          <Link href="/">MyApp</Link>
+        <div className="text-2xl font-bold text-white transaction hover:text-green-400">
+          <Link href="/">FitByAndAlekTho</Link>
         </div>
 
         <div>
@@ -33,7 +33,7 @@ export default async function Navbar() {
         <ul className="flex space-x-6 text-lg text-gray-200">
           {!token && (
             <li>
-              <Link href="/login" className="hover:text-blue-400 transition-colors">
+              <Link href="/login" className="hover:text-green-400 transition-colors">
                 Login
               </Link>
             </li>
@@ -42,19 +42,19 @@ export default async function Navbar() {
           {token && (
             <ul className="flex space-x-6 text-lg text-gray-200">
             <li>
-              <Link href="/" className="hover:text-blue-400 transition-colors">
+              <Link href="/" className="hover:text-green-400 transition-colors">
                 Home
               </Link>
             </li>
             {role === "PersonalTrainer" && (
               <ul className="flex space-x-6 text-lg text-gray-200">
                 <li>
-                  <Link href="/clients" className="hover:text-blue-400 transition-colors">
+                  <Link href="/clients" className="hover:text-green-400 transition-colors">
                     Clients
                   </Link>
                 </li>
                 <li>
-                  <Link href="/programs" className="hover:text-blue-400 transition-colors">
+                  <Link href="/programs" className="hover:text-green-400 transition-colors">
                     Programs
                   </Link>
                 </li>

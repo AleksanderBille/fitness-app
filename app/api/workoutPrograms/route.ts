@@ -37,39 +37,3 @@ export async function GET(req: Request) {
 }
 
 
-// Potentially call to get all programs for current user
-/* 
-export async function GET() {
-    try {
-        const cookieStore = await cookies();
-        const token = cookieStore.get("auth_token")?.value;
-
-        let userId: string | null = null;
-
-        if(!token) {
-          return NextResponse.json(
-            { success: false, error: "Token could not be retrieved."},
-            { status: 500 }
-          );
-        }
-
-        try {
-            const decoded: any = jwtDecode(token);
-            userId = decoded.UserId || null;
-        } catch (e) {
-            return NextResponse.json(
-                { success: false, error: "Error while decoding token."},
-                { status: 500 }
-            );
-        }
-
-        const result = await getWorkputProgramsForCurrentUser(userId, token);
-
-        return NextResponse.json(result)
-    } catch (e: any) {
-        return NextResponse.json(
-            { success: false, error: e?.message || String(e) },
-            { status: 500 }
-        );
-    }
-} */
