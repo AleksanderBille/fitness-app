@@ -3,13 +3,11 @@
 import { useState } from "react";
 
 interface CreateUserComponentProps {
-  clients: Client[];
-  setClientList: React.Dispatch<React.SetStateAction<Client[]>>;
+  setClientList: React.Dispatch<React.SetStateAction<User[]>> | null;
 }
 
 export default function CreateUserComponent({
-  clients,
-  setClientList
+  setClientList: setUserList
 }: CreateUserComponentProps) {
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
@@ -49,12 +47,15 @@ export default function CreateUserComponent({
       setPassword("");
     }
 
-    setClientList(prev => [...prev, data.user]);
+    // Add the user to the list if required
+    if (setUserList != null) {
+      setUserList(prev => [...prev, data.user]);
+    }
   }
 
   return (
     <div className="flex-1 p-6">
-      <h1 className="text-2xl font-bold">Create new client</h1>
+      <h1 className="text-2xl font-bold">Create new user</h1>
       <form onSubmit={handleSubmit} className="space-y-4">
         <input
           value={firstName}
@@ -109,7 +110,7 @@ export default function CreateUserComponent({
           type="submit"
           className="w-full bg-blue-700 text-white py-2 rounded-xl hover:bg-blue-700 active:scale-95 transition-all shadow-md"
         >
-          Create Client
+          Submit
         </button>
       </form>
       {error && (

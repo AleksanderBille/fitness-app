@@ -1,4 +1,4 @@
-interface Client {
+interface User {
     userId : number,
     firstName : string,
     lastName : string,

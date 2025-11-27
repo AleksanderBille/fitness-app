@@ -3,7 +3,6 @@ import { redirect } from "next/navigation";
 import ErrorPage from "../ErrorPage";
 import ClientsPage from "./ClientsPage";
 
-
 export default async function Clients() {
   const cookieStore = await cookies();
   const token = cookieStore.get("auth_token")?.value;
