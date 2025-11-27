@@ -1,7 +1,7 @@
 "use client"
 
 interface ClientCardProps {
-    client : Client
+    client : User
 }
 
 export default function ClientCard({ client }: ClientCardProps) {
