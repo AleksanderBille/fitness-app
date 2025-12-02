@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import Link from "next/link";
 
 interface Exercise {
     exerciseId: number;
@@ -81,7 +82,12 @@ if (!programs || programs.length === 0) {
 }
 return(
     <div className="max-w-3xl mx-auto p-6">
-        <h1 className="text-3xl font-bold mb-6 text-center text-white"> All Workout Programs</h1>
+    <div className="flex items-center justify-between mb-6">
+        <h1 className="text-3xl font-bold text-white"> All Workout Programs </h1>
+        <Link
+            href="programs/new_workout"
+            className="p-4 rounded-md bg-cyan-950 text-white shadow-lg hover:bg-green-600 transition"> Add new workout </Link>
+    </div>
         {programs.map(program => (
             <div
             key={program.workoutProgramId}
