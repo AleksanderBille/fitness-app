@@ -29,5 +29,10 @@ export default async function ManagerProgramsPage() {
     );
   }
 
-  return <ManagerPrograms programs={data} />;
+  return (
+    <div>
+    <ManagerPrograms programs={data} />
+    </div>
+
+);
 }
