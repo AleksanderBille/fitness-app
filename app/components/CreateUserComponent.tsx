@@ -108,7 +108,7 @@ export default function CreateUserComponent({
 
         <button
           type="submit"
-          className="w-full bg-blue-700 text-white py-2 rounded-xl hover:bg-blue-700 active:scale-95 transition-all shadow-md"
+          className="w-full bg-cyan-950 text-white py-2 rounded-xl hover:bg-green-500 active:scale-95 transition-all shadow-md"
         >
           Submit
         </button>

@@ -63,9 +63,9 @@ export default function AddWorkoutForm({ clients }: { clients: any[] }) {
             onChange={(e) => setClientId(e.target.value)}
             required
             >
-            <option value="">-- Select Client --</option>
-            {clients.map((client: any) => (
-                <option key={client.id} value={client.id}>
+            <option value="" key={"default"}>-- Select Client --</option>
+            {clients.map((client: any, index: number) => (
+                <option  key={client.id ?? `client-${index}`} value={client.id}>
                 {client.firstName} {client.lastName}
                 </option>
             ))}
